@@ -10,8 +10,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-resource "random_string" "string" {
-  length  = var.length
-  numeric = var.number
-  special = var.special
+resource "aws_appconfig_configuration_profile" "configuration_profile" {
+  application_id     = var.application_id
+  name               = var.name
+  location_uri       = var.location_uri
+  description        = var.description
+  kms_key_identifier = var.kms_key_identifier
+  region             = var.region
+  retrieval_role_arn = var.retrieval_role_arn
+  tags               = var.tags
+  type               = var.type
+
+  dynamic "validator" {
+    for_each = var.validators
+    content {
+      type    = validator.value.type
+      content = validator.value.content
+    }
+  }
 }

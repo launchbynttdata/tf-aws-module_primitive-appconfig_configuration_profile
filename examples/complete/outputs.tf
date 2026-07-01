@@ -12,30 +12,42 @@
 
 output "id" {
   description = "The configuration profile ID."
-  value       = aws_appconfig_configuration_profile.configuration_profile.configuration_profile_id
+  value       = module.configuration_profile.id
 }
-
 output "arn" {
   description = "The ARN of the configuration profile."
-  value       = aws_appconfig_configuration_profile.configuration_profile.arn
+  value       = module.configuration_profile.arn
 }
-
 output "name" {
   description = "The name of the configuration profile."
-  value       = aws_appconfig_configuration_profile.configuration_profile.name
+  value       = module.configuration_profile.name
 }
-
 output "application_id" {
-  description = "The AppConfig application ID."
-  value       = aws_appconfig_configuration_profile.configuration_profile.application_id
+  description = "The application ID."
+  value       = module.configuration_profile.application_id
 }
-
 output "location_uri" {
   description = "The configuration source URI."
-  value       = aws_appconfig_configuration_profile.configuration_profile.location_uri
+  value       = module.configuration_profile.location_uri
 }
-
 output "type" {
   description = "The configuration profile type."
-  value       = aws_appconfig_configuration_profile.configuration_profile.type
+  value       = module.configuration_profile.type
+}
+output "expected_name" {
+  description = "Expected configuration profile name."
+  value       = module.resource_names["configuration_profile"].standard
+}
+output "expected_location_uri" {
+  description = "Expected location URI."
+  value       = var.location_uri
+}
+output "expected_type" {
+  description = "Expected profile type."
+  value       = var.type
+}
+
+output "region" {
+  description = "The AWS Region where the example resources are deployed."
+  value       = data.aws_region.current.region
 }
