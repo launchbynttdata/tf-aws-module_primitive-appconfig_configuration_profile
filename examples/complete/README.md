@@ -146,6 +146,7 @@ module "configuration_profile" {
 | <a name="output_expected_name"></a> [expected\_name](#output\_expected\_name) | Expected configuration profile name. |
 | <a name="output_expected_type"></a> [expected\_type](#output\_expected\_type) | Expected profile type. |
 | <a name="output_id"></a> [id](#output\_id) | The configuration profile ID. |
+| <a name="output_kms_key_identifier"></a> [kms\_key\_identifier](#output\_kms\_key\_identifier) | The KMS key identifier configured for hosted configuration data. |
 | <a name="output_location_uri"></a> [location\_uri](#output\_location\_uri) | The configuration source URI. |
 | <a name="output_name"></a> [name](#output\_name) | The name of the configuration profile. |
 | <a name="output_region"></a> [region](#output\_region) | The AWS Region where the example resources are deployed. |

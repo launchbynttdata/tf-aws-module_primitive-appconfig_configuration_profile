@@ -61,3 +61,8 @@ output "expected_kms_key_identifier" {
   description = "Expected KMS key identifier."
   value       = aws_kms_key.appconfig.arn
 }
+
+output "kms_key_identifier" {
+  description = "The KMS key identifier configured for hosted configuration data."
+  value       = module.configuration_profile.kms_key_identifier
+}

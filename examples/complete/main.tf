@@ -77,11 +77,12 @@ resource "aws_appconfig_application" "example" {
 module "configuration_profile" {
   source = "../.."
 
-  application_id = aws_appconfig_application.example.id
-  name           = module.resource_names["configuration_profile"].standard
-  description    = var.description
-  location_uri   = var.location_uri
-  type           = var.type
-  validators     = []
-  tags           = var.tags
+  application_id     = aws_appconfig_application.example.id
+  name               = module.resource_names["configuration_profile"].standard
+  description        = var.description
+  location_uri       = var.location_uri
+  type               = var.type
+  kms_key_identifier = aws_kms_key.appconfig.arn
+  validators         = []
+  tags               = var.tags
 }
