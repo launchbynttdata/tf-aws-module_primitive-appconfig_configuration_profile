@@ -33,13 +33,12 @@ func verifyConfigurationProfile(t *testing.T, ctx types.TestContext) (*appconfig
 	name := terraform.Output(t, opts, "name")
 	locationURI := terraform.Output(t, opts, "location_uri")
 	profileType := terraform.Output(t, opts, "type")
-	expectedKMSKeyARN := terraform.Output(t, opts, "expected_kms_key_arn")
-	expectedKMSKeyIdentifier := terraform.Output(t, opts, "expected_kms_key_identifier")
 
 	require.NotEqual(t, "", id)
 	assert.Equal(t, terraform.Output(t, opts, "expected_name"), name)
 	assert.Equal(t, terraform.Output(t, opts, "expected_location_uri"), locationURI)
 	assert.Equal(t, terraform.Output(t, opts, "expected_type"), profileType)
+	assert.Equal(t, terraform.Output(t, opts, "expected_kms_key_identifier"), terraform.Output(t, opts, "kms_key_identifier"))
 
 	client := appConfigClient(t, region)
 	profile, err := client.GetConfigurationProfile(context.Background(), &appconfig.GetConfigurationProfileInput{
@@ -53,8 +52,6 @@ func verifyConfigurationProfile(t *testing.T, ctx types.TestContext) (*appconfig
 	assert.Equal(t, name, aws.ToString(profile.Name))
 	assert.Equal(t, locationURI, aws.ToString(profile.LocationUri))
 	assert.Equal(t, profileType, aws.ToString(profile.Type))
-	assert.Equal(t, expectedKMSKeyARN, aws.ToString(profile.KmsKeyArn))
-	assert.Equal(t, expectedKMSKeyIdentifier, aws.ToString(profile.KmsKeyIdentifier))
 
 	return client, arn
 }
