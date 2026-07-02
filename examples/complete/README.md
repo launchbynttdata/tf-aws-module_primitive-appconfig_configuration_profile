@@ -21,6 +21,44 @@ data "aws_region" "current" {}
 
 data "aws_caller_identity" "current" {}
 
+data "aws_iam_policy_document" "appconfig_kms" {
+  statement {
+    sid     = "EnableAccountAdministration"
+    effect  = "Allow"
+    actions = ["kms:*"]
+    principals {
+      type        = "AWS"
+      identifiers = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"]
+    }
+    resources = ["*"]
+  }
+
+  statement {
+    sid    = "AllowAppConfigUse"
+    effect = "Allow"
+    actions = [
+      "kms:Decrypt",
+      "kms:DescribeKey",
+      "kms:Encrypt",
+      "kms:GenerateDataKey*",
+    ]
+    principals {
+      type        = "Service"
+      identifiers = ["appconfig.amazonaws.com"]
+    }
+    resources = ["*"]
+  }
+}
+
+resource "aws_kms_key" "appconfig" {
+  description         = "KMS key for AppConfig hosted configuration data"
+  enable_key_rotation = true
+  policy              = data.aws_iam_policy_document.appconfig_kms.json
+  tags                = merge(var.tags, { Name = module.resource_names["kms_key"].standard })
+}
+
+
+
 module "resource_names" {
   source  = "terraform.registry.launch.nttdata.com/module_library/resource_name/launch"
   version = "~> 2.0"
@@ -76,6 +114,9 @@ module "configuration_profile" {
 | Name | Type |
 |------|------|
 | [aws_appconfig_application.example](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appconfig_application) | resource |
+| [aws_kms_key.appconfig](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_key) | resource |
+| [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
+| [aws_iam_policy_document.appconfig_kms](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_region.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region) | data source |
 
 ## Inputs
@@ -99,6 +140,8 @@ module "configuration_profile" {
 |------|-------------|
 | <a name="output_application_id"></a> [application\_id](#output\_application\_id) | The application ID. |
 | <a name="output_arn"></a> [arn](#output\_arn) | The ARN of the configuration profile. |
+| <a name="output_expected_kms_key_arn"></a> [expected\_kms\_key\_arn](#output\_expected\_kms\_key\_arn) | Expected KMS key ARN. |
+| <a name="output_expected_kms_key_identifier"></a> [expected\_kms\_key\_identifier](#output\_expected\_kms\_key\_identifier) | Expected KMS key identifier. |
 | <a name="output_expected_location_uri"></a> [expected\_location\_uri](#output\_expected\_location\_uri) | Expected location URI. |
 | <a name="output_expected_name"></a> [expected\_name](#output\_expected\_name) | Expected configuration profile name. |
 | <a name="output_expected_type"></a> [expected\_type](#output\_expected\_type) | Expected profile type. |

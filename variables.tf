@@ -85,6 +85,14 @@ variable "validators" {
     condition     = alltrue([for validator in var.validators : contains(["JSON_SCHEMA", "LAMBDA"], validator.type)])
     error_message = "Validator type must be JSON_SCHEMA or LAMBDA."
   }
+  validation {
+    condition     = alltrue([for validator in var.validators : validator.type != "JSON_SCHEMA" || try(length(validator.content) > 0, false)])
+    error_message = "JSON_SCHEMA validators must include non-empty content."
+  }
+  validation {
+    condition     = alltrue([for validator in var.validators : validator.type != "LAMBDA" || can(regex("^arn:", coalesce(validator.content, "")))])
+    error_message = "LAMBDA validators must include a Lambda ARN in content."
+  }
 }
 
 variable "region" {

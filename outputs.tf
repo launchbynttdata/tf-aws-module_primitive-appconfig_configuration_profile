@@ -39,3 +39,23 @@ output "type" {
   description = "The configuration profile type."
   value       = aws_appconfig_configuration_profile.configuration_profile.type
 }
+
+output "description" {
+  description = "The configuration profile description."
+  value       = aws_appconfig_configuration_profile.configuration_profile.description
+}
+
+output "kms_key_identifier" {
+  description = "The KMS key identifier configured for hosted configuration data."
+  value       = aws_appconfig_configuration_profile.configuration_profile.kms_key_identifier
+}
+
+output "retrieval_role_arn" {
+  description = "The IAM role ARN AWS AppConfig assumes to retrieve external configuration."
+  value       = aws_appconfig_configuration_profile.configuration_profile.retrieval_role_arn
+}
+
+output "validators" {
+  description = "The configured validators for the configuration profile."
+  value       = aws_appconfig_configuration_profile.configuration_profile.validator
+}

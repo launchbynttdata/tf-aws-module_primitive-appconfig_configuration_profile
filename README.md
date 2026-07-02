@@ -56,10 +56,14 @@ No modules.
 |------|-------------|
 | <a name="output_application_id"></a> [application\_id](#output\_application\_id) | The AppConfig application ID. |
 | <a name="output_arn"></a> [arn](#output\_arn) | The ARN of the configuration profile. |
+| <a name="output_description"></a> [description](#output\_description) | The configuration profile description. |
 | <a name="output_id"></a> [id](#output\_id) | The configuration profile ID. |
+| <a name="output_kms_key_identifier"></a> [kms\_key\_identifier](#output\_kms\_key\_identifier) | The KMS key identifier configured for hosted configuration data. |
 | <a name="output_location_uri"></a> [location\_uri](#output\_location\_uri) | The configuration source URI. |
 | <a name="output_name"></a> [name](#output\_name) | The name of the configuration profile. |
+| <a name="output_retrieval_role_arn"></a> [retrieval\_role\_arn](#output\_retrieval\_role\_arn) | The IAM role ARN AWS AppConfig assumes to retrieve external configuration. |
 | <a name="output_type"></a> [type](#output\_type) | The configuration profile type. |
+| <a name="output_validators"></a> [validators](#output\_validators) | The configured validators for the configuration profile. |
 <!-- END_TF_DOCS -->
 
 ## Module Development
