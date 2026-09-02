@@ -26,19 +26,19 @@ func TestComposableCompleteReadOnly(t *testing.T, ctx types.TestContext) {
 
 func verifyConfigurationProfile(t *testing.T, ctx types.TestContext) (*appconfig.Client, string) {
 	opts := ctx.TerratestTerraformOptions()
-	region := terraform.Output(t, opts, "region")
-	applicationID := terraform.Output(t, opts, "application_id")
-	id := terraform.Output(t, opts, "id")
-	arn := terraform.Output(t, opts, "arn")
-	name := terraform.Output(t, opts, "name")
-	locationURI := terraform.Output(t, opts, "location_uri")
-	profileType := terraform.Output(t, opts, "type")
+	region := terraform.OutputContext(t, context.Background(), opts, "region")
+	applicationID := terraform.OutputContext(t, context.Background(), opts, "application_id")
+	id := terraform.OutputContext(t, context.Background(), opts, "id")
+	arn := terraform.OutputContext(t, context.Background(), opts, "arn")
+	name := terraform.OutputContext(t, context.Background(), opts, "name")
+	locationURI := terraform.OutputContext(t, context.Background(), opts, "location_uri")
+	profileType := terraform.OutputContext(t, context.Background(), opts, "type")
 
 	require.NotEqual(t, "", id)
-	assert.Equal(t, terraform.Output(t, opts, "expected_name"), name)
-	assert.Equal(t, terraform.Output(t, opts, "expected_location_uri"), locationURI)
-	assert.Equal(t, terraform.Output(t, opts, "expected_type"), profileType)
-	assert.Equal(t, terraform.Output(t, opts, "expected_kms_key_identifier"), terraform.Output(t, opts, "kms_key_identifier"))
+	assert.Equal(t, terraform.OutputContext(t, context.Background(), opts, "expected_name"), name)
+	assert.Equal(t, terraform.OutputContext(t, context.Background(), opts, "expected_location_uri"), locationURI)
+	assert.Equal(t, terraform.OutputContext(t, context.Background(), opts, "expected_type"), profileType)
+	assert.Equal(t, terraform.OutputContext(t, context.Background(), opts, "expected_kms_key_identifier"), terraform.OutputContext(t, context.Background(), opts, "kms_key_identifier"))
 
 	client := appConfigClient(t, region)
 	profile, err := client.GetConfigurationProfile(context.Background(), &appconfig.GetConfigurationProfileInput{
